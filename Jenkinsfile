@@ -44,10 +44,10 @@ pipeline {
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'web-server-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
-                        sh "sshpass -p '$USERNAME' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull swap/test-train-schedule:${env.BUILD_NUMBER}\" "
+                        sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull swap/test-train-schedule:${env.BUILD_NUMBER}\" "
                         try {
-                            sh "sshpass -p '$USERNAME' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop test-train-schedule\" "
-                            sh "sshpass -p '$USERNAME' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm test-train-schedule\" "
+                            sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop test-train-schedule\" "
+                            sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm test-train-schedule\" "
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
