@@ -1,4 +1,4 @@
-#This is the docker image file
+#This is the docker image file. Updated @22 Dec
 FROM node:carbon
 WORKDIR /usr/src/app
 COPY package*.json ./
