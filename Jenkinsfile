@@ -24,14 +24,10 @@ pipeline {
             }
             steps {
                 script {
-                    try {
-                        docker.withRegistry('https://hub.docker.com', 'docker-hub') {
-                            app.push["${env.BUILD_NUMBER}"]
-                            app.push["latest"]
-                        }
-                    } catch (err) {
-                            echo: 'caught error: $err'
-                    }
+                    docker.withRegistry('https://hub.docker.com', 'docker-hub') {
+                        app.push["${env.BUILD_NUMBER}"]
+                        app.push["latest"]
+                     }
                 }
             }
         }
