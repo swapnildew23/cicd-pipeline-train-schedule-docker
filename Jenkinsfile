@@ -27,7 +27,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-login') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
                         app.push["${env.BUILD_NUMBER}"]
                         app.push["latest"]
                     }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 input 'Deploy to Production Server'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'deploy', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'web-server-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
                         sh "sshpass -p '$USERNAME' -v ssh -o StrictHostKeyChecking=no $USERNAME@prod_ip \"docker pull swap/test-train-schedule:${env.BUILD_NUMBER}\" "
                         try {
